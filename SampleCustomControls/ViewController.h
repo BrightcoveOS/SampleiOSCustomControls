@@ -12,6 +12,6 @@
 #import <BCOVPlayerSDK.h>
 
 
-@interface ViewController : UIViewController <BCOVPlaybackControllerDelegate>
+@interface ViewController : UIViewController <BCOVPlaybackControllerDelegate, UIGestureRecognizerDelegate>
 
 @end

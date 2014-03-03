@@ -15,6 +15,10 @@
 static NSString * const kViewControllerCatalogToken = @"nFCuXstvl910WWpPnCeFlDTNrpXA5mXOO9GPkuTCoLKRyYpPF1ikig..";
 static NSString * const kViewControllerPlaylistID = @"2149006311001";
 
+static NSTimeInterval const kViewControllerControlsVisibleDuration = 5.;
+static NSTimeInterval const kViewControllerFadeControlsInAnimationDuration = .1;
+static NSTimeInterval const kViewControllerFadeControlsOutAnimationDuration = .2;
+
 
 @interface ViewController ()
 
@@ -23,6 +27,8 @@ static NSString * const kViewControllerPlaylistID = @"2149006311001";
 @property (nonatomic, weak) AVPlayer *currentPlayer;
 
 @property (nonatomic, weak) IBOutlet UIView *videoViewContainer;
+@property (nonatomic, weak) IBOutlet UIView *controlsView;
+@property (nonatomic, retain) NSTimer *controlTimer;
 @property (nonatomic, weak) IBOutlet UILabel *durationLabel;
 @property (nonatomic, weak) IBOutlet UILabel *elapsedTimeLabel;
 @property (nonatomic, weak) IBOutlet UIButton *playPauseButton;
@@ -100,7 +106,13 @@ static NSString * const kViewControllerPlaylistID = @"2149006311001";
     
     self.playbackController.view.frame = self.videoViewContainer.bounds;
     self.playbackController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.videoViewContainer addSubview:self.playbackController.view];
+    [self.videoViewContainer insertSubview:self.playbackController.view belowSubview:self.controlsView];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected:)];
+    tapRecognizer.numberOfTapsRequired = 1;
+    tapRecognizer.numberOfTouchesRequired = 1;
+    tapRecognizer.delegate = self;
+    [self.view addGestureRecognizer:tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,24 +121,106 @@ static NSString * const kViewControllerPlaylistID = @"2149006311001";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Controls
+
+- (void)fadeControlsIn
+{
+    [UIView animateWithDuration:kViewControllerFadeControlsInAnimationDuration animations:^{
+        
+        [self showControls];
+        
+    } completion:^(BOOL finished) {
+        
+        if(finished)
+        {
+            [self reestablishTimer];
+        }
+        
+    }];
+}
+
+- (void)fadeControlsOut
+{
+    [UIView animateWithDuration:kViewControllerFadeControlsOutAnimationDuration animations:^{
+        
+        [self hideControls];
+        
+    }];
+}
+
+- (void)hideControls
+{
+    self.controlsView.alpha = 0.f;
+}
+
+- (void)showControls
+{
+    self.controlsView.alpha = 1.f;
+}
+
+- (void)reestablishTimer
+{
+    [self.controlTimer invalidate];
+    self.controlTimer = [NSTimer scheduledTimerWithTimeInterval:kViewControllerControlsVisibleDuration target:self selector:@selector(fadeControlsOut) userInfo:nil repeats:NO];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if([touch.view isKindOfClass:[UIButton class]] || [touch.view isKindOfClass:[UISlider class]])
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)tapDetected:(UIGestureRecognizer *)gestureRecognizer
+{
+    if(self.playPauseButton.isSelected)
+    {
+        if(self.controlsView.alpha == 0.f)
+        {
+            [self fadeControlsIn];
+        }
+        else if (self.controlsView.alpha == 1.f)
+        {
+            [self fadeControlsOut];
+        }
+    }
+}
+
+- (void)invalidateTimerAndShowControls
+{
+    [self.controlTimer invalidate];
+    [self showControls];
+}
+
 #pragma mark BCOVPlaybackControllerDelegate
 
 - (void)playbackController:(id<BCOVPlaybackController>)controller didAdvanceToPlaybackSession:(id<BCOVPlaybackSession>)session
 {
+    // Use this method to cleanup and reset state.
+    
     self.currentPlayer = session.player;
     self.wasPlayingOnSeek = NO;
     
     self.elapsedTimeLabel.text = [ViewController formatTime:0];
     self.progressSlider.value = 0.f;
+    
+    [self invalidateTimerAndShowControls];
 }
 
 - (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didChangeDuration:(NSTimeInterval)duration
 {
+    // Update the duration label.
+    
     self.durationLabel.text = [ViewController formatTime:duration];
 }
 
 - (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didProgressTo:(NSTimeInterval)progress
 {
+    // Update the elapsed time label and update the progress slider
+    
     self.elapsedTimeLabel.text = [ViewController formatTime:progress];
     
     NSTimeInterval duration = CMTimeGetSeconds(session.player.currentItem.duration);
@@ -138,11 +232,26 @@ static NSString * const kViewControllerPlaylistID = @"2149006311001";
 {
     if ([kBCOVPlaybackSessionLifecycleEventPlay isEqualToString:lifecycleEvent.eventType])
     {
+        // Change to the pause button and reset the timer to hide the controls after
+        // the timeout.
+        
         self.playPauseButton.selected = YES;
+        
+        [self reestablishTimer];
     }
     else if([kBCOVPlaybackSessionLifecycleEventPause isEqualToString:lifecycleEvent.eventType])
     {
+        // Change to the play button and remove the timer and show controls.
+        
         self.playPauseButton.selected = NO;
+        
+        [self invalidateTimerAndShowControls];
+    }
+    else if ([kBCOVPlaybackSessionLifecycleEventEnd isEqualToString:lifecycleEvent.eventType])
+    {
+        // Remove the timer and show controls.
+        
+        [self invalidateTimerAndShowControls];
     }
 }
 
