@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		474E836AEFDC4C32A9AC340B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0946704397142CEA2B15FAD /* libPods.a */; };
+		490E235C18C533DC0029205A /* ControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E235A18C533DC0029205A /* ControlsViewController.m */; };
+		490E235D18C533DC0029205A /* ControlsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E235B18C533DC0029205A /* ControlsViewController.xib */; };
 		49E2675E18C113DE001F93F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E2675D18C113DE001F93F0 /* Foundation.framework */; };
 		49E2676018C113DE001F93F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E2675F18C113DE001F93F0 /* CoreGraphics.framework */; };
 		49E2676218C113DE001F93F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E2676118C113DE001F93F0 /* UIKit.framework */; };
@@ -40,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		1B534ED61C47414E939A818B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		490E235918C533DC0029205A /* ControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlsViewController.h; sourceTree = "<group>"; };
+		490E235A18C533DC0029205A /* ControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlsViewController.m; sourceTree = "<group>"; };
+		490E235B18C533DC0029205A /* ControlsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlsViewController.xib; sourceTree = "<group>"; };
 		49E2675A18C113DE001F93F0 /* SampleCustomControls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleCustomControls.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E2675D18C113DE001F93F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49E2675F18C113DE001F93F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,6 +133,9 @@
 		49E2676318C113DE001F93F0 /* SampleCustomControls */ = {
 			isa = PBXGroup;
 			children = (
+				490E235918C533DC0029205A /* ControlsViewController.h */,
+				490E235A18C533DC0029205A /* ControlsViewController.m */,
+				490E235B18C533DC0029205A /* ControlsViewController.xib */,
 				49E2676C18C113DE001F93F0 /* AppDelegate.h */,
 				49E2676D18C113DE001F93F0 /* AppDelegate.m */,
 				49E2676F18C113DE001F93F0 /* Main_iPhone.storyboard */,
@@ -254,6 +262,7 @@
 				49E2679B18C11906001F93F0 /* pause_btn.png in Resources */,
 				49E2677118C113DE001F93F0 /* Main_iPhone.storyboard in Resources */,
 				49E2679C18C11906001F93F0 /* play_btn.png in Resources */,
+				490E235D18C533DC0029205A /* ControlsViewController.xib in Resources */,
 				49E2676818C113DE001F93F0 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +317,7 @@
 			files = (
 				49E2677718C113DE001F93F0 /* ViewController.m in Sources */,
 				49E2676E18C113DE001F93F0 /* AppDelegate.m in Sources */,
+				490E235C18C533DC0029205A /* ControlsViewController.m in Sources */,
 				49E2676A18C113DE001F93F0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

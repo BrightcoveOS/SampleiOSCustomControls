@@ -17,76 +17,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMd-SF-cUS" userLabel="videoView">
-                                <rect key="frame" x="0.0" y="20" width="768" height="494"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMd-SF-cUS" userLabel="videoContainerView">
+                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WMb-GK-bLk" userLabel="controlsView">
-                                        <rect key="frame" x="0.0" y="440" width="768" height="54"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePK-q6-nqm" userLabel="controlsContainerView">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHS-9n-XRB" userLabel="playPauseButton">
-                                                <rect key="frame" x="20" y="7" width="40" height="40"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="play_btn.png">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="selected" image="pause_btn.png"/>
-                                                <connections>
-                                                    <action selector="playPauseButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="neW-rd-iRc"/>
-                                                </connections>
-                                            </button>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihx-fY-Uy5" userLabel="elapsedTimeLabel">
-                                                <rect key="frame" x="68" y="17" width="68" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="SXW-TT-YtG" userLabel="progressSlider">
-                                                <rect key="frame" x="142" y="10" width="532" height="34"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="sliderTouchBegin:" destination="BYZ-38-t0r" eventType="touchDown" id="kql-4y-Ctt"/>
-                                                    <action selector="sliderTouchEnd:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="NPv-hp-oAC"/>
-                                                    <action selector="sliderTouchEnd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X5y-pU-4Hf"/>
-                                                    <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="2Lq-aS-9Z9"/>
-                                                </connections>
-                                            </slider>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Uw-lb-zXt" userLabel="durationLabel">
-                                                <rect key="frame" x="680" y="16" width="68" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ePK-q6-nqm" secondAttribute="trailing" id="34r-NK-wVk"/>
+                                    <constraint firstAttribute="bottom" secondItem="ePK-q6-nqm" secondAttribute="bottom" id="Af3-7l-kim"/>
+                                    <constraint firstItem="ePK-q6-nqm" firstAttribute="leading" secondItem="aMd-SF-cUS" secondAttribute="leading" id="U5J-ld-5CM"/>
+                                    <constraint firstAttribute="centerY" secondItem="ePK-q6-nqm" secondAttribute="centerY" id="Z2j-MT-7B6"/>
+                                    <constraint firstItem="ePK-q6-nqm" firstAttribute="top" secondItem="aMd-SF-cUS" secondAttribute="top" id="li5-xZ-39k"/>
+                                    <constraint firstAttribute="centerX" secondItem="ePK-q6-nqm" secondAttribute="centerX" id="wdc-f0-xGi"/>
+                                </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="aMd-SF-cUS" secondAttribute="bottom" id="22G-Nj-rRz"/>
+                            <constraint firstAttribute="trailing" secondItem="aMd-SF-cUS" secondAttribute="trailing" id="3nL-vU-jza"/>
+                            <constraint firstItem="aMd-SF-cUS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="FKM-Ec-EGZ"/>
+                            <constraint firstAttribute="centerY" secondItem="aMd-SF-cUS" secondAttribute="centerY" constant="-10" id="bdD-qO-b7H"/>
+                            <constraint firstAttribute="centerX" secondItem="aMd-SF-cUS" secondAttribute="centerX" id="igc-En-1JU"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="controlsView" destination="WMb-GK-bLk" id="los-JV-iS8"/>
-                        <outlet property="durationLabel" destination="9Uw-lb-zXt" id="syA-VB-kkZ"/>
-                        <outlet property="elapsedTimeLabel" destination="ihx-fY-Uy5" id="aao-mM-mRs"/>
-                        <outlet property="playPauseButton" destination="lHS-9n-XRB" id="jBc-1V-LK8"/>
-                        <outlet property="progressSlider" destination="SXW-TT-YtG" id="uvY-1N-YbC"/>
-                        <outlet property="videoViewContainer" destination="aMd-SF-cUS" id="Xog-7M-9NU"/>
+                        <outlet property="controlsContainerView" destination="ePK-q6-nqm" id="eW4-rb-DIB"/>
+                        <outlet property="videoContainerView" destination="aMd-SF-cUS" id="r75-PB-pOt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
-    <resources>
-        <image name="pause_btn.png" width="40" height="40"/>
-        <image name="play_btn.png" width="40" height="40"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
         <simulatedOrientationMetrics key="orientation"/>
