@@ -1,0 +1,18 @@
+PODS:
+  - Brightcove-Player-SDK (4.1.5):
+    - ReactiveCocoa (~> 2.1)
+  - ReactiveCocoa (2.2.4):
+    - ReactiveCocoa/Core
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/Core (2.2.4):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.2.4)
+
+DEPENDENCIES:
+  - Brightcove-Player-SDK
+
+SPEC CHECKSUMS:
+  Brightcove-Player-SDK: 7be0eae28ae191ccc661dc2f96976695bd385c5c
+  ReactiveCocoa: 953a45dda30674fe704d1d9c77cc874141742f47
+
+COCOAPODS: 0.29.0
