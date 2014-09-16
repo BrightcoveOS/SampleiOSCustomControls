@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 #import "ControlsViewController.h"
-#import "RACEXTScope.h"
 
 
 // ** Customize Here **
@@ -75,14 +74,14 @@ static NSTimeInterval const kViewControllerFadeControlsOutAnimationDuration = .2
 
 - (void)requestContentFromCatalog
 {
-    @weakify(self);
+    typeof(self) __weak weakSelf = self;
     [self.catalogService findPlaylistWithPlaylistID:kViewControllerPlaylistID parameters:nil completion:^(BCOVPlaylist *playlist, NSDictionary *jsonResponse, NSError *error) {
         
-        @strongify(self);
+        typeof(self) strongSelf = weakSelf;
         
         if (playlist)
         {
-            [self.playbackController setVideos:playlist.videos];
+            [strongSelf.playbackController setVideos:playlist.videos];
         }
         else
         {
