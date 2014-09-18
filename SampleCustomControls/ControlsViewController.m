@@ -8,8 +8,6 @@
 
 #import "ControlsViewController.h"
 
-#import "RACEXTScope.h"
-
 
 @interface ControlsViewController ()
 
@@ -94,16 +92,16 @@
     NSTimeInterval newCurrentTime = sender.value * CMTimeGetSeconds(self.currentPlayer.currentItem.duration);
     CMTime seekToTime = CMTimeMakeWithSeconds(newCurrentTime, 600);
     
-    @weakify(self);
+    typeof(self) __weak weakSelf = self;
     
     [self.currentPlayer seekToTime:seekToTime completionHandler:^(BOOL finished) {
         
-        @strongify(self);
+        typeof(self) strongSelf = weakSelf;
         
-        if (finished && self.wasPlayingOnSeek)
+        if (finished && strongSelf.wasPlayingOnSeek)
         {
-            self.wasPlayingOnSeek = NO;
-            [self.currentPlayer play];
+            strongSelf.wasPlayingOnSeek = NO;
+            [strongSelf.currentPlayer play];
         }
         
     }];

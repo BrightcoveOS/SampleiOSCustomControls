@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 #import "ControlsViewController.h"
-#import "RACEXTScope.h"
 
 
 // ** Customize Here **
@@ -35,17 +34,7 @@ static NSTimeInterval const kViewControllerFadeControlsOutAnimationDuration = .2
 
 @implementation ViewController
 
-- (id)init
-{
-    self = [super init];
-    if (self)
-	{
-        [self configure];
-    }
-    return self;
-}
-
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
@@ -55,13 +44,17 @@ static NSTimeInterval const kViewControllerFadeControlsOutAnimationDuration = .2
     return self;
 }
 
--(void)awakeFromNib
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    [super awakeFromNib];
-    [self configure];
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        [self configure];
+    }
+    return self;
 }
 
--(void)configure
+- (void)configure
 {
     BCOVPlayerSDKManager *playbackManager = [BCOVPlayerSDKManager sharedManager];
     
@@ -75,14 +68,14 @@ static NSTimeInterval const kViewControllerFadeControlsOutAnimationDuration = .2
 
 - (void)requestContentFromCatalog
 {
-    @weakify(self);
+    typeof(self) __weak weakSelf = self;
     [self.catalogService findPlaylistWithPlaylistID:kViewControllerPlaylistID parameters:nil completion:^(BCOVPlaylist *playlist, NSDictionary *jsonResponse, NSError *error) {
         
-        @strongify(self);
+        typeof(self) strongSelf = weakSelf;
         
         if (playlist)
         {
-            [self.playbackController setVideos:playlist.videos];
+            [strongSelf.playbackController setVideos:playlist.videos];
         }
         else
         {
@@ -228,17 +221,11 @@ static NSTimeInterval const kViewControllerFadeControlsOutAnimationDuration = .2
 {
     [controlsView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    NSLayoutConstraint *fixedHeightConstraint = [NSLayoutConstraint constraintWithItem:controlsView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:Nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:50];
-    [self.controlsContainerView addConstraint:fixedHeightConstraint];
+    NSArray *horizontalLayoutConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[controlsView]|" options:NSLayoutFormatDirectionLeadingToTrailing metrics:nil views:NSDictionaryOfVariableBindings(controlsView)];
+    [self.controlsContainerView addConstraints:horizontalLayoutConstraints];
     
-    NSLayoutConstraint *pinToBottomConstraint = [NSLayoutConstraint constraintWithItem:controlsView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.controlsContainerView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    [self.controlsContainerView addConstraint:pinToBottomConstraint];
-    
-    NSLayoutConstraint *equalWidthConstraint = [NSLayoutConstraint constraintWithItem:controlsView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.controlsContainerView attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
-    [self.controlsContainerView addConstraint:equalWidthConstraint];
-    
-    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:controlsView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.controlsContainerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
-    [self.controlsContainerView addConstraint:centerXConstraint];
+    NSArray *verticalLayoutConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[controlsView(height)]|" options:NSLayoutFormatDirectionLeadingToTrailing metrics:@{ @"height": @50 } views:NSDictionaryOfVariableBindings(controlsView)];
+    [self.controlsContainerView addConstraints:verticalLayoutConstraints];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
